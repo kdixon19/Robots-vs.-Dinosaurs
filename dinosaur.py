@@ -6,6 +6,6 @@ class Dinosaur:
         self.health = 1000
 
     def attack(self, robot):
-        pass
+        robot.health -= self.attack_power
 
     
