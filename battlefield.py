@@ -11,42 +11,30 @@ class Battlefield:
 
     def run_game(self):
         self.display_welcome()
-        self.battle_phase()
+        self.battle_phase(self.dinosaur, self.robot)
 
     def display_welcome(self):
         print(f'GOOOOOOOOOOOOOOOOOOOOD MORNING BATTLERS, WE HAVE AN EXCEPTIONAL FIGHT FOR YOU TONIGHT! IN THE LEFT CORNER WE HAVE THE MEAN GREEN BIG BAD DINOSAUR, THEY CALL HIM {self.dinosaur.name}, AND IN THE RIGHT CORNER, HES TOUGH, HES TALL, HES MADE OUT OF METAL! HIS NAME IS {self.robot.name} LETS START THE BATTLE!')
 
 
-    def battle_phase(self):
-        robot_first = False
-        dinosaur_first = False
+    def battle_phase(self, attacker_1, attacker_2):
+        while attacker_1.health > 0 or attacker_2.health > 0:
+            attacker_1.attack(attacker_2)
+            print(f'{attacker_2.name} just took a hit, his health is now at {attacker_2.health}')
+            attacker_2.attack(attacker_1)
+            print(f'Oooh thats gotta hurt, {attacker_1.name} health is now reduced to {attacker_1.health}')
+            if self.dinosaur.health <= 0:
+                self.display_winner(self.robot)
+            elif self.robot.health <= 0:
+                self.display_winner(self.dinosaur)
+
+    
+    def coin_flip(self):
         coin_flip = random.randint(1,2)
         if coin_flip == 1:
-            robot_first = True
+            self.battle_phase(self.robot, self.dinosaur)
         elif coin_flip == 2:
-            dinosaur_first = True
-        while robot_first == True:
-            self.robot.attack(self.dinosaur)
-            print(f'Dinosaur just took a hit, his health is now at {self.dinosaur.health}')
-            self.dinosaur.attack(self.robot)
-            print(f'Oooh thats gotta hurt, Robots health is now reduced to {self.robot.health}')
-            if self.dinosaur.health <= 0:
-                robot_first == False
-                self.display_winner(self.robot)
-            elif self.robot.health <= 0:
-                robot_first == False
-                self.display_winner(self.dinosaur)
-        while dinosaur_first == True:
-            self.dinosaur.attack(self.robot)
-            print(f'Oooh thats gotta hurt, Robots health is now reduced to {self.robot.health}')
-            self.robot.attack(self.dinosaur)
-            print(f'Dinosaur just took a hit, his health is now at {self.dinosaur.health}')
-            if self.dinosaur.health <= 0:
-                dinosaur_first == False
-                self.display_winner(self.robot)
-            elif self.robot.health <= 0:
-                dinosaur_first == False
-                self.display_winner(self.dinosaur)
+            self.battle_phase(self.dinosaur, self.robot)
 
     def display_winner(self, winner):
         print(f'AND OUR WINNER IS {winner.name}')
