@@ -31,10 +31,10 @@ class Battlefield:
             self.dinosaur.attack(self.robot)
             print(f'Oooh thats gotta hurt, Robots health is now reduced to {self.robot.health}')
             if self.dinosaur.health <= 0:
-                dinosaur_first == False
+                robot_first == False
                 self.display_winner(self.robot)
             elif self.robot.health <= 0:
-                dinosaur_first == False
+                robot_first == False
                 self.display_winner(self.dinosaur)
         while dinosaur_first == True:
             self.dinosaur.attack(self.robot)
